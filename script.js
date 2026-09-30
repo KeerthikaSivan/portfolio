@@ -61,7 +61,7 @@ pts.forEach((p,i)=>{p.x=(p.x+p.vx+cv.width)%cv.width;p.y=(p.y+p.vy+cv.height)%cv
 size();frame();addEventListener("resize",size);
 if(matchMedia("(pointer:fine)").matches)addEventListener("mousemove",e=>{$("#glow").style.left=e.clientX+"px";$("#glow").style.top=e.clientY+"px"});
 /* CONTACT FORM — Web3Forms */
-const W3F_KEY="YOUR_WEB3FORMS_ACCESS_KEY"; // get a free key at https://web3forms.com (sent to keerthika721@gmail.com)
+const W3F_KEY="ba652310-5648-4515-bcfc-c89c1e60de77"; // get a free key at https://web3forms.com (sent to keerthika721@gmail.com)
 $("#form").onsubmit=async e=>{e.preventDefault();const f=e.target,m=$("#fmsg"),btn=$("button[type=submit]",f);let ok=true;
 ["name","email","message"].forEach(n=>{const el=f[n],bad=!el.value.trim()||(n==="email"&&!/^\S+@\S+\.\S+$/.test(el.value));el.classList.toggle("err",bad);if(bad)ok=false});
 m.className="";if(!ok){m.textContent="Fill in your name, a valid email and a message.";m.classList.add("bad");return}
