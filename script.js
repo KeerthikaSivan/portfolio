@@ -60,18 +60,6 @@ function frame(){cx.clearRect(0,0,cv.width,cv.height);cx.strokeStyle="rgba(200,1
 pts.forEach((p,i)=>{p.x=(p.x+p.vx+cv.width)%cv.width;p.y=(p.y+p.vy+cv.height)%cv.height;cx.fillStyle="rgba(200,120,255,.7)";cx.fillRect(p.x,p.y,2,2);for(let j=i+1;j<pts.length;j++){const d=Math.hypot(p.x-pts[j].x,p.y-pts[j].y);if(d<110){cx.strokeStyle=`rgba(255,95,196,${.15*(1-d/110)})`;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke()}}});if(!still)requestAnimationFrame(frame)}
 size();frame();addEventListener("resize",size);
 if(matchMedia("(pointer:fine)").matches)addEventListener("mousemove",e=>{$("#glow").style.left=e.clientX+"px";$("#glow").style.top=e.clientY+"px"});
-/* CONTACT FORM — Web3Forms */
-const W3F_KEY="ba652310-5648-4515-bcfc-c89c1e60de77"; // get a free key at https://web3forms.com (sent to keerthika721@gmail.com)
-$("#form").onsubmit=async e=>{e.preventDefault();const f=e.target,m=$("#fmsg"),btn=$("button[type=submit]",f);let ok=true;
-["name","email","message"].forEach(n=>{const el=f[n],bad=!el.value.trim()||(n==="email"&&!/^\S+@\S+\.\S+$/.test(el.value));el.classList.toggle("err",bad);if(bad)ok=false});
-m.className="";if(!ok){m.textContent="Fill in your name, a valid email and a message.";m.classList.add("bad");return}
-if(W3F_KEY.startsWith("YOUR_")){m.textContent="Add your Web3Forms access key in script.js (W3F_KEY) to enable sending.";m.classList.add("bad");return}
-const data=Object.fromEntries(new FormData(f));data.access_key=W3F_KEY;data.subject="New portfolio enquiry from "+data.name;data.from_name="Portfolio Website";
-btn.disabled=true;btn.textContent="Sending…";
-try{const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});const j=await r.json();
-if(j.success){m.textContent="Thanks! Your message was sent. You will get a reply soon.";m.classList.add("ok");f.reset()}else throw new Error(j.message)}
-catch(err){m.textContent="Could not send: "+(err.message||"network error")+". Email keerthika721@gmail.com instead.";m.classList.add("bad")}
-btn.disabled=false;btn.textContent="Send Message"};
 /* MARQUEE + CARD SPOTLIGHT */
 const mq=["Python","Java","Data Structures","LeetCode","AI Agents","Power BI","SQL","Data Analytics","Web Development","Mentoring"];$("#marq").innerHTML=[...mq,...mq].map(x=>`<span>${x}</span>`).join("");
 document.addEventListener("pointermove",e=>{const c=e.target.closest(".glass,.grid>article");if(c){const r=c.getBoundingClientRect();c.style.setProperty("--mx",e.clientX-r.left+"px");c.style.setProperty("--my",e.clientY-r.top+"px")}});
